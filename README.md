@@ -1,54 +1,30 @@
-# React + TypeScript + Vite
+# Who's That Pokémon?
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fun web app that lets **Gemini guess the name of a Pokémon** based on a custom prompt — then fetches detailed Pokémon info using the [PokéAPI](https://pokeapi.co/). Built with **Vite**, **Tailwind CSS**, and **Gemini API** for a hackathon competition.
 
-Currently, two official plugins are available:
+## Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   [PokeDex](pokedex-bice-xi.vercel.app)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## How It Works
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. A user inputs a clue or description.
+2. The app sends that input to the **Gemini API** with a custom pre-built prompt.
+3. Gemini returns a guess — the name of a Pokémon.
+4. The app then fetches Pokémon info (stats, sprite, etc.) from **PokéAPI**.
+5. Results are displayed in a custom Pokédex-style UI.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tech Stack
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+-   [Vite](https://vitejs.dev/) – fast frontend tooling
+-   [Tailwind CSS](https://tailwindcss.com/) – utility-first CSS
+-   [Gemini API](https://ai.google.dev/) – Google's LLM for the Pokémon guess
+-   [PokéAPI](https://pokeapi.co/) – open Pokémon data
+-   [React Query (TanStack Query)](https://tanstack.com/query) – data fetching
+-   [Vercel](https://vercel.com/) – deployment platform
+
+## David Cai - 2025
