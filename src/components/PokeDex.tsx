@@ -1,17 +1,31 @@
 import { ReactNode } from "react";
+import { useWhosThatPokemon } from "../context/pokemonProvider";
 
 type PokeDexProps = {
     children: ReactNode;
 };
 
 export function PokeDex({ children }: PokeDexProps) {
+    const { setPokemonData, input, setInput, guessPokemon } =
+        useWhosThatPokemon();
+
+    const handleSubmit = () => {
+        if (input.trim() === "") return;
+        guessPokemon.mutate(input);
+    };
+
+    const handleClear = () => {
+        setInput("");
+        setPokemonData(null);
+    };
     return (
         <div className="flex flex-col bg-rose-600 border-1 border-black rounded-xl p-2">
             {/* Top of PokeDex */}
             <div className="flex flex-row gap-4 p-4">
                 <div className="bg-white border-1 border-black size-15 rounded-full flex justify-center items-center p-1">
-                    <div className="bg-sky-500 rounded-full border-1 border-black grow h-full flex justify-center items-center">
-                        <div className="bg-sky-900 rounded-full grow m-2"></div>
+                    <div className="bg-sky-500 rounded-full border-1 border-black grow h-full flex justify-center items-center relative">
+                        <div className="bg-sky-700 rounded-full size-10 absolute z-10"></div>
+                        <div className="bg-sky-200 rounded-full size-5 border-3 border-sky-500 absolute z-20 top-0"></div>
                     </div>
                 </div>
 
@@ -50,9 +64,19 @@ export function PokeDex({ children }: PokeDexProps) {
                     </div>
                     {/* start select */}
                     <div className="flex flex-col gap-4">
-                        <div className="flex flex-row gap-6">
-                            <div className="h-2 w-8 bg-rose-500 border-1 border-black rounded-full"></div>
-                            <div className="h-2 w-8 bg-blue-500 border-1 border-black rounded-full"></div>
+                        <div className="flex flex-row gap-6 text-sm">
+                            <button
+                                className="px-2 bg-blue-500 border-1 border-black rounded-full cursor-pointer"
+                                onClick={handleSubmit}
+                            >
+                                Search
+                            </button>
+                            <button
+                                className="px-2 bg-rose-500 border-1 border-black rounded-full cursor-pointer"
+                                onClick={handleClear}
+                            >
+                                Clear
+                            </button>
                         </div>
                         {/* Green screen */}
                         <div className="bg-emerald-600 h-12 w-20 border-1 border-black self-center rounded-sm"></div>

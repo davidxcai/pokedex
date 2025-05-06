@@ -5,24 +5,8 @@ import { PokeDex } from "./components/PokeDex";
 import { Pokemon } from "./components/Pokemon";
 
 function App() {
-    const {
-        pokemonData,
-        setPokemonData,
-        input,
-        setInput,
-        guessPokemon,
-        fetchPokemonData,
-    } = useWhosThatPokemon();
-
-    const handleSubmit = () => {
-        if (input.trim() === "") return;
-        guessPokemon.mutate(input);
-    };
-
-    const handleClear = () => {
-        setInput("");
-        setPokemonData(null);
-    };
+    const { pokemonData, guessPokemon, fetchPokemonData } =
+        useWhosThatPokemon();
 
     const isLoading = guessPokemon.isPending || fetchPokemonData.isLoading;
 
@@ -39,21 +23,6 @@ function App() {
                     ) : null}
                 </>
             </PokeDex>
-
-            <div className="flex flex-row gap-5 ">
-                <button
-                    className="py-2 px-4 bg-gray-500 rounded-md cursor-pointer hover:bg-amber-500"
-                    onClick={handleSubmit}
-                >
-                    Search
-                </button>
-                <button
-                    className="py-2 px-4 bg-gray-500 rounded-md cursor-pointer hover:bg-amber-500"
-                    onClick={handleClear}
-                >
-                    Clear
-                </button>
-            </div>
         </div>
     );
 }
