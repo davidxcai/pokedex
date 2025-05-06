@@ -2,6 +2,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { initialPrompt } from "../hooks/usePromptFormat";
 import { useState, useEffect } from "react";
 import { Pokemon as PokemonType } from "../types";
+const development = false;
+const url = development ? "http://localhost:3000/generate" : "/api/gemini";
 
 export function useWhosThatPokemon() {
     const [pokemonName, setPokemonName] = useState<string | null>(null);
@@ -13,7 +15,7 @@ export function useWhosThatPokemon() {
         mutationFn: async (input: string) => {
             setPokemon(null);
             const prompt = initialPrompt(input);
-            const response = await fetch("http://localhost:3001/generate", {
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
