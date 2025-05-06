@@ -2,6 +2,8 @@
 
 A fun web app that lets **Gemini guess the name of a Pokémon** based on a custom prompt — then fetches detailed Pokémon info using the [PokéAPI](https://pokeapi.co/). Built with **Vite**, **Tailwind CSS**, and **Gemini API** for a hackathon competition.
 
+The purpose of this project was to demonstrate a proof of concept using Gemini API to process natural language and use the results to fetch data from other APIs.
+
 ## Demo
 
 -   [PokeDex](pokedex-bice-xi.vercel.app)
@@ -27,4 +29,4 @@ A fun web app that lets **Gemini guess the name of a Pokémon** based on a custo
 -   [React Query (TanStack Query)](https://tanstack.com/query) – data fetching
 -   [Vercel](https://vercel.com/) – deployment platform
 
-## David Cai - 2025
+Built & Designed by David Cai- 2025
