@@ -1,11 +1,29 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { initialPrompt } from "../hooks/usePromptFormat";
-import { useState, useEffect } from "react";
+import {
+    useState,
+    useEffect,
+    useContext,
+    createContext,
+    ReactNode,
+} from "react";
 import { Pokemon as PokemonType } from "../types";
-const development = false;
-const url = development ? "http://localhost:3000/generate" : "/api/gemini";
+import { W } from "mongodb";
+const development = true;
+const url = development ? "http://localhost:3001/generate" : "/api/gemini";
 
-export function useWhosThatPokemon() {
+// ------------------ CONTEXT SETUP ------------------
+interface WhosThatPokemonContextType {
+    pokemon: PokemonType | null;
+    setPokemon: (p: PokemonType | null) => void;
+    guessPokemon: ReturnType<typeof useMutation>;
+    fetchPokemonData: ReturnType<typeof useQuery>;
+}
+
+const WhosThatPokemonContext = createContext<WhosThatPokemonContextType | undefined>(undefined);
+
+
+export function WhosThatPokemonProvider({ children }: { children: ReactNode }) {
     const [pokemonName, setPokemonName] = useState<string | null>(null);
     const [pokemon, setPokemon] = useState<PokemonType | null>(null);
 
@@ -60,10 +78,16 @@ export function useWhosThatPokemon() {
         }
     }, [fetchPokemonData.data]);
 
-    return {
-        guessPokemon,
-        fetchPokemonData,
-        pokemon,
-        setPokemon,
-    };
+    return (
+        <WhosThatPokemonContext.Provider
+    )
 }
+
+export function useWhosThatPokemon() {
+    const context = useContext(WhosThatPokemonContext);
+    if (!context) {
+        throw new Error("useWhosThatPokemon must be used within a WhosThatPokemonProvider");
+    }
+    return context;
+}
+

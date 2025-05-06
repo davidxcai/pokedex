@@ -1,12 +1,18 @@
-import { useState } from "react";
-import { useWhosThatPokemon } from "./hooks/useApi";
+import { TextInput } from "./components/TextInput";
+import { LoadingScreen } from "./components/LoadingScreen";
+import { useWhosThatPokemon } from "./context/pokemonProvider";
 import { PokeDex } from "./components/PokeDex";
 import { Pokemon } from "./components/Pokemon";
 
 function App() {
-    const { guessPokemon, fetchPokemonData, pokemon, setPokemon } =
-        useWhosThatPokemon();
-    const [input, setInput] = useState("");
+    const {
+        pokemonData,
+        setPokemonData,
+        input,
+        setInput,
+        guessPokemon,
+        fetchPokemonData,
+    } = useWhosThatPokemon();
 
     const handleSubmit = () => {
         if (input.trim() === "") return;
@@ -15,32 +21,21 @@ function App() {
 
     const handleClear = () => {
         setInput("");
-        setPokemon(null);
+        setPokemonData(null);
     };
 
-    const loading = guessPokemon.isPending || fetchPokemonData.isLoading;
+    const isLoading = guessPokemon.isPending || fetchPokemonData.isLoading;
 
     return (
         <div className="flex flex-col gap-5 justify-center items-center h-screen">
             <PokeDex>
                 <>
-                    {!pokemon && !loading ? (
-                        <textarea
-                            value={input}
-                            placeholder="Describe a Pokemon"
-                            onChange={(e) => setInput(e.target.value)}
-                            className="grow text-white"
-                        ></textarea>
-                    ) : guessPokemon.isPending ? (
-                        <p>Analyzing...</p>
-                    ) : guessPokemon.isError ? (
-                        <p>Error: Could not identify Pokemon</p>
-                    ) : fetchPokemonData.isLoading ? (
-                        <p>Getting Pokemon info...</p>
-                    ) : fetchPokemonData.isError ? (
-                        <p>Error: Pokemon not found</p>
-                    ) : fetchPokemonData.isSuccess && pokemon ? (
-                        <Pokemon pokemon={pokemon} />
+                    {!pokemonData && !isLoading ? (
+                        <TextInput />
+                    ) : isLoading ? (
+                        <LoadingScreen />
+                    ) : pokemonData ? (
+                        <Pokemon pokemon={pokemonData} />
                     ) : null}
                 </>
             </PokeDex>
