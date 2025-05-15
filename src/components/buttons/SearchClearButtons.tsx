@@ -1,5 +1,4 @@
 import { usePokemon } from "../../context/pokemonProvider";
-import { useQueryClient } from "@tanstack/react-query";
 
 export function SearchButton() {
   const { input, guessPokemon } = usePokemon();
@@ -22,11 +21,10 @@ export function SearchButton() {
 }
 
 export function ClearButton() {
-  const queryClient = useQueryClient();
-  const { input } = usePokemon();
+  const { input, setCurrentPokemon } = usePokemon();
   const handleClear = () => {
     input.current = "";
-    queryClient.setQueryData(["pokemon"], null);
+    setCurrentPokemon(null);
   };
   return (
     <button

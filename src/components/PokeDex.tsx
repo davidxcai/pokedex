@@ -1,34 +1,12 @@
 import { ReactNode } from "react";
-import { usePokemon } from "../context/pokemonProvider";
 import { SoundButton, SearchButton, ClearButton } from "./buttons/";
 import { DPad } from "./DPad";
-import { useQueryClient } from "@tanstack/react-query";
 
 type PokeDexProps = {
   children: ReactNode;
 };
 
-function buttons() {
-  const queryClient = useQueryClient();
-  const { input, guessPokemon } = usePokemon();
-
-  const handleSubmit = () => {
-    if (input.current.trim() === "") return;
-    guessPokemon.reset();
-    guessPokemon.mutate(input.current);
-  };
-
-  const handleClear = () => {
-    input.current = "";
-    queryClient.setQueryData(["pokemon"], null);
-  };
-
-  return { handleSubmit, handleClear };
-}
-
 export function PokeDex({ children }: PokeDexProps) {
-  const { handleSubmit, handleClear } = buttons();
-
   return (
     <div className="flex flex-col bg-rose-600 border-1 border-black rounded-xl p-2">
       {/* Top of PokeDex */}
