@@ -1,74 +1,53 @@
 import { useGuessPokemon } from "../hooks/useGuessPokemon";
 import { useFetchPokemonData } from "../hooks/useFetchPokemonData";
 import {
-    useState,
-    useEffect,
-    useContext,
-    createContext,
-    ReactNode,
+  useRef,
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
 } from "react";
-import { Pokemon as PokemonType } from "../types";
 
-interface WhosThatPokemonContextType {
-    input: string;
-    setInput: (input: string) => void;
-    pokemonData: PokemonType | null;
-    setPokemonData: (pokemonData: PokemonType | null) => void;
-    guessPokemon: ReturnType<typeof useGuessPokemon>;
-    fetchPokemonData: ReturnType<typeof useFetchPokemonData>;
-}
+type PokemonContextType = {
+  input: React.RefObject<string>;
+  currentPokemon: number | null;
+  setCurrentPokemon: React.Dispatch<React.SetStateAction<number | null>>;
+  guessPokemon: ReturnType<typeof useGuessPokemon>;
+  fetchPokemon: ReturnType<typeof useFetchPokemonData>;
+};
 
-const WhosThatPokemonContext = createContext<
-    WhosThatPokemonContextType | undefined
->(undefined);
+const PokemonContext = createContext<PokemonContextType | undefined>(undefined);
 
-export function WhosThatPokemonProvider({ children }: { children: ReactNode }) {
-    const [input, setInput] = useState<string>("");
-    const [pokemonName, setPokemonName] = useState<string | null>(null);
-    const [pokemonData, setPokemonData] = useState<PokemonType | null>(null);
+export function PokemonProvider({ children }: { children: ReactNode }) {
+  const input = useRef<string>("");
+  const [currentPokemon, setCurrentPokemon] = useState<number | null>(null);
+  const guessPokemon = useGuessPokemon();
+  const fetchPokemon = useFetchPokemonData(currentPokemon);
 
-    const guessPokemon = useGuessPokemon();
-    const fetchPokemonData = useFetchPokemonData(pokemonName);
-
-    useEffect(() => {
-        if (guessPokemon.isPending) {
-            setPokemonData(null);
-        }
-    }, [guessPokemon.isPending]);
-
-    useEffect(() => {
-        if (guessPokemon.isSuccess) {
-            setPokemonName(guessPokemon.data);
-        }
-    }, [guessPokemon.isSuccess]);
-
-    const { data } = fetchPokemonData;
-    useEffect(() => {
-        if (data) {
-            setPokemonData(data ?? null);
-        }
-    }, [data]);
-
-    return (
-        <WhosThatPokemonContext.Provider
-            value={{
-                input,
-                setInput,
-                pokemonData,
-                setPokemonData,
-                guessPokemon,
-                fetchPokemonData,
-            }}
-        >
-            {children}
-        </WhosThatPokemonContext.Provider>
-    );
-}
-
-export function useWhosThatPokemon() {
-    const context = useContext(WhosThatPokemonContext);
-    if (!context) {
-        throw new Error("Context must be used within a Provider");
+  useEffect(() => {
+    if (guessPokemon.data) {
+      setCurrentPokemon(Number(guessPokemon.data));
     }
-    return context;
+  }, [guessPokemon.data]);
+
+  const values = {
+    input,
+    currentPokemon,
+    setCurrentPokemon,
+    guessPokemon,
+    fetchPokemon,
+  };
+
+  return (
+    <PokemonContext.Provider value={values}>{children}</PokemonContext.Provider>
+  );
+}
+
+export function usePokemon() {
+  const context = useContext(PokemonContext);
+  if (!context) {
+    throw new Error("Context must be used within a Provider");
+  }
+  return context;
 }
