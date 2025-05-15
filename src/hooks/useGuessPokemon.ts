@@ -39,11 +39,10 @@ async function guessPokemon(input: string) {
 }
 
 export function useGuessPokemon() {
-    const guessPokemonMutation = useMutation({
+    return useMutation({
         mutationFn: guessPokemon,
         onError: (error) => {
             console.error("Error:", (error as Error).message);
         },
     });
-    return guessPokemonMutation;
 }

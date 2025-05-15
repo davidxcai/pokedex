@@ -1,13 +1,13 @@
-import { useWhosThatPokemon } from "../context/pokemonProvider";
+import { usePokemon } from "../context/pokemonProvider";
 
 export function TextInput() {
-    const { input, setInput } = useWhosThatPokemon();
-    return (
-        <textarea
-            value={input}
-            placeholder="Describe a Pokemon"
-            onChange={(e) => setInput(e.target.value)}
-            className="grow text-white"
-        ></textarea>
-    );
+  const { input } = usePokemon();
+  return (
+    <textarea
+      defaultValue={input.current}
+      placeholder="Describe a Pokemon"
+      onChange={(e) => (input.current = e.target.value)}
+      className="grow text-white"
+    ></textarea>
+  );
 }
