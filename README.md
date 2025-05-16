@@ -8,7 +8,7 @@ The purpose of this project was to demonstrate a proof of concept using Gemini A
 
 -   [PokeDex](pokedex-bice-xi.vercel.app)
 
--   Try typing: "I saw this rainbow bird fly over Pallet town. What was that Pokemon?"
+-   Try typing: "Famous mouse Pokemon"
 
 ---
 
