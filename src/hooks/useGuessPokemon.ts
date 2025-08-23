@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-const url = import.meta.env.VITE_API_URL ?? "/api/gemini";
+const url = import.meta.env.VITE_API_URL ?? "/api/openai";
 
 function promptInstruction(input: string) {
     return `
@@ -15,7 +15,7 @@ function promptInstruction(input: string) {
         - Use knowledge of type, appearance, species, and known traits to infer the best match.
         - Prioritize Pokémon whose design clearly aligns with the description.
         - If multiple Pokémon are close, choose the most iconic or earliest by Pokédex number.
-        - If no match is possible, return the ID of "Unown".
+        - If no match is possible, return the ID 201.
 
         Output format:
         pokemon-id

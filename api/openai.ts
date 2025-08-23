@@ -1,6 +1,6 @@
-import { GoogleGenAI } from "@google/genai";
-
-const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_GENAI_API_KEY! });
+import "dotenv/config";
+import OpenAI from "openai";
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export default async function handler(req: any, res: any) {
     if (req.method !== "POST") {
@@ -14,16 +14,14 @@ export default async function handler(req: any, res: any) {
             return res.status(400).json({ error: "Missing prompt" });
         }
 
-        const response = await ai.models.generateContent({
-            model: "gemini-2.0-flash",
-            contents: prompt,
+        const response = await client.responses.create({
+            model: "gpt-5",
+            input: prompt,
         });
 
-        console.log("Gemini Response:", response);
-
-        res.status(200).json({ text: response.text });
+        res.status(200).json({ text: response.output_text });
     } catch (error: any) {
-        console.error("Gemini API Error:", error);
+        console.error("OpenAI API Error:", error);
         res.status(500).json({
             error: error.message || "Internal Server Error",
         });
