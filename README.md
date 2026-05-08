@@ -1,22 +1,22 @@
 # Who's That Pokémon?
 
-A fun web app that lets **Gemini guess the name of a Pokémon** based on a custom prompt — then fetches detailed Pokémon info using the [PokéAPI](https://pokeapi.co/). Built with **Vite**, **Tailwind CSS**, and **Groq** for a hackathon competition.
+A fun web app that lets **Gemini guess the name of a Pokémon** based on a custom prompt — then fetches detailed Pokémon info using the [PokéAPI](https://pokeapi.co/). Built with **Vite**, **Tailwind CSS**, and **Gemini** for a hackathon competition.
 
-The purpose of this project was to demonstrate a proof of concept using Groq to process natural language and use the results to fetch data from other APIs.
+The purpose of this project was to demonstrate a proof of concept using Gemini to process natural language and use the results to fetch data from other APIs.
 
 ## Demo
 
--   [PokeDex](pokedex-bice-xi.vercel.app)
+- [PokeDex](pokedex-bice-xi.vercel.app)
 
--   Try typing: "Famous mouse Pokemon"
+- Try typing: "Famous mouse Pokemon"
 
 ---
 
 ## How It Works
 
 1. A user inputs a clue or description.
-2. The app sends that input to the **Groq** with a custom pre-built prompt.
-3. Groq returns a guess — the ID of a Pokémon.
+2. The app sends that input to the **Gemini** with a custom pre-built prompt.
+3. Gemini returns a guess — the ID of a Pokémon.
 4. The app then fetches Pokémon info (stats, sprite, etc.) from **PokéAPI**.
 5. Results are displayed in a custom Pokédex-style UI.
 
@@ -24,11 +24,11 @@ The purpose of this project was to demonstrate a proof of concept using Groq to 
 
 ## Tech Stack
 
--   [Vite](https://vitejs.dev/) – fast frontend tooling
--   [Tailwind CSS](https://tailwindcss.com/) – utility-first CSS
--   [Groq](https://ai.google.dev/) – LLM for the Pokémon guess
--   [PokéAPI](https://pokeapi.co/) – open Pokémon data
--   [React Query (TanStack Query)](https://tanstack.com/query) – data fetching
--   [Vercel](https://vercel.com/) – deployment platform
+- [Vite](https://vitejs.dev/) – fast frontend tooling
+- [Tailwind CSS](https://tailwindcss.com/) – utility-first CSS
+- [Gemini](https://ai.google.dev/) – LLM for the Pokémon guess
+- [PokéAPI](https://pokeapi.co/) – open Pokémon data
+- [React Query (TanStack Query)](https://tanstack.com/query) – data fetching
+- [Vercel](https://vercel.com/) – deployment platform
 
 Built & Designed by David Cai- 2025
