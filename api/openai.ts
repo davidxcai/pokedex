@@ -23,7 +23,8 @@ export default async function handler(req: any, res: any) {
       model: "gemini-3-flash-preview",
       contents: prompt, // This uses your tuned promptInstruction(input)
       config: {
-        temperature: 0.1,
+        temperature: 1.0,
+        maxOutputTokens: 10,
       },
     });
 
