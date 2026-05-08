@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-const url = import.meta.env.VITE_API_URL ?? "/api/openai";
+const url = import.meta.env.VITE_API_URL ?? "/api/gemini";
 
 function promptInstruction(input: string) {
   return `
