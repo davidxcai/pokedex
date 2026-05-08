@@ -1,8 +1,8 @@
 import "dotenv/config";
 import OpenAI from "openai";
 const client = new OpenAI({
-  apiKey: process.env.GROQ_API_KEY,
-  baseURL: "https://api.groq.com/openai/v1",
+  apiKey: process.env.GEMINI_API_KEY,
+  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
 });
 
 export default async function handler(req: any, res: any) {
@@ -17,18 +17,21 @@ export default async function handler(req: any, res: any) {
       return res.status(400).json({ error: "Missing prompt" });
     }
 
+    // 2. Use Gemini 3 Flash for that "extremely quick" speed you liked
     const response = await client.chat.completions.create({
-      model: "meta-llama/llama-4-scout-17b-16e-instruct", // Use Llama 4 for the best "trivia" logic
+      model: "gemini-3-flash-preview",
       messages: [{ role: "user", content: prompt }],
-      temperature: 0.1, // Set to 0.1 so it stays very consistent with IDs
+      temperature: 0.1,
     });
 
-    // Parse the ID string into a number
+    // 3. Extract the ID from the choices array
     const pokemonId = response.choices[0].message.content?.trim();
+
+    console.log("Gemini Guess:", pokemonId);
 
     res.status(200).json({ text: pokemonId || "201" });
   } catch (error: any) {
-    console.error("OpenAI API Error:", error);
+    console.error("Gemini API Error:", error);
     res.status(500).json({
       error: error.message || "Internal Server Error",
     });
