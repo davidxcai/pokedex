@@ -1,8 +1,9 @@
 import "dotenv/config";
-import OpenAI from "openai";
-const client = new OpenAI({
+import { GoogleGenAI } from "@google/genai";
+
+// 1. Initialize the official Google client
+const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
-  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
 });
 
 export default async function handler(req: any, res: any) {
@@ -17,21 +18,23 @@ export default async function handler(req: any, res: any) {
       return res.status(400).json({ error: "Missing prompt" });
     }
 
-    // 2. Use Gemini 3 Flash for that "extremely quick" speed you liked
-    const response = await client.chat.completions.create({
+    // 2. Call the model directly
+    const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
-      messages: [{ role: "user", content: prompt }],
-      temperature: 0.1,
+      contents: prompt, // This uses your tuned promptInstruction(input)
+      config: {
+        temperature: 0.1,
+      },
     });
 
-    // 3. Extract the ID from the choices array
-    const pokemonId = response.choices[0].message.content?.trim();
+    // 3. Native format: the text is directly on response.text
+    const pokemonId = response?.text?.trim();
 
-    console.log("Gemini Guess:", pokemonId);
+    console.log("Native Gemini ID:", pokemonId);
 
     res.status(200).json({ text: pokemonId || "201" });
   } catch (error: any) {
-    console.error("Gemini API Error:", error);
+    console.error("Native Gemini Error:", error);
     res.status(500).json({
       error: error.message || "Internal Server Error",
     });
