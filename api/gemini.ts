@@ -24,14 +24,15 @@ export default async function handler(req: any, res: any) {
       contents: prompt, // This uses your tuned promptInstruction(input)
       config: {
         temperature: 1.0,
-        maxOutputTokens: 10,
       },
     });
+
+    console.log("Api response", response);
 
     // 3. Native format: the text is directly on response.text
     const pokemonId = response?.text?.trim();
 
-    console.log("Native Gemini ID:", pokemonId);
+    console.log("Pokemon ID:", pokemonId);
 
     res.status(200).json({ text: pokemonId || "201" });
   } catch (error: any) {

@@ -9,8 +9,8 @@ export function PokedexScreen() {
   const isLoading = guessPokemon.isPending || fetchPokemon.isLoading;
   const pokemonData = fetchPokemon.data;
 
-  console.log("isLoading", isLoading);
-  console.log("currentPokemon", currentPokemon);
+  // console.log("isLoading", isLoading);
+  // console.log("currentPokemon", currentPokemon);
   return (
     <>
       {!currentPokemon && !isLoading && <TextInput />}

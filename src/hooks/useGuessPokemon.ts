@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-const url = import.meta.env.VITE_API_URL ?? "/api/gemini";
+const url = import.meta.env.VITE_API_URL ?? "/api/gemini.ts";
 
 function promptInstruction(input: string) {
   return `
@@ -42,7 +42,7 @@ async function guessPokemon(input: string) {
   if (!response.ok) {
     throw new Error("Failed to generate Pokémon ID number");
   }
-
+  console.log(response);
   const data = await response.json();
   return data.text.trim();
 }
